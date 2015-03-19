@@ -4,9 +4,15 @@
  * Contains \Drupal\metatag\Plugin\Metatag\MetaName.
  */
 
+/**
+ * Each meta tag will extend this base.
+ * Set 'base_tag' to TRUE for plugins that are to be extended and not
+ * used on their own
+ */
+
 namespace Drupal\metatag\Plugin\Metatag;
 
-use Drupal\Component\Plugin\PluginBase;
+// use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Annotation\Plugin;
 use Drupal\Core\Annotation\Translation;
 
@@ -20,7 +26,7 @@ use Drupal\Core\Annotation\Translation;
  *   base_tag = TRUE
  * )
  */
-class MetaName extends PluginBase {
+class MetaName {
   private $options = array();
 //  private $name = '';
 //  private $label = '';
