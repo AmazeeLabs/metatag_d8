@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains metatag.module
+ */
+
+// Used by hook_help().
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function metatag_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the metatag module.
+    case 'help.page.metatag':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Meta tags are awesome.') . '</p>';
+      return $output;
+    break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+// function metatag_theme() {
+//   $theme = [];
+//
+//   return $theme;
+// }
