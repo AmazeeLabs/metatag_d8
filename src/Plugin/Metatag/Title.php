@@ -13,8 +13,8 @@ use Drupal\metatag\Plugin\Metatag\MetaName;
 /**
  * Base plugin for defining text Metatag tag types.
  *
- * @Plugin(
- *   id = "title",
+ * @Metatag(
+ *   id = "Title",
  *   label = @Translation("Page title")
  * )
  */

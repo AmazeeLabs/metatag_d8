@@ -36,21 +36,18 @@ class MetatagFirehose extends WidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $metatag_service = \Drupal::service('plugin.manager.metatag');
     $metatag_types = $metatag_service->getDefinitions();
+    dpm($metatag_types);
+    // $raw = isset($items[$delta]->value) ? $items[$delta]->value : '';
+    // $values = unserialize($raw);
 
-    $raw = isset($items[$delta]->value) ? $items[$delta]->value : '';
-//    $values = unserialize($raw);
-
-    foreach ($metatag_types as $tag_name => $tag_info) {
-      // @todo Is this how it should be done? There might be a better way of
-      //   handling it.
-      if (empty($tag_info['base_tag'])) {
-        dpm($tag_info);
-        dpm((string)$tag_info['label']);
-        $tag = $metatag_service->createInstance($tag_name);
-//      $tag = instance_of $tag_name;
-//      $element['value'] = $element + $tag->form();
-      }
-    }
+    // foreach ($metatag_types as $tag_name => $tag_info) {
+    //   dpm($tag_info);
+    //   dpm((string)$tag_info['label']);
+    //   if (empty($tag_info['base_tag'])) {
+    //     $tag = $metatag_service->createInstance($tag_name);
+    //     $element['value'] = $element + $tag->form();
+    //   }
+    // }
 
     return $element;
   }

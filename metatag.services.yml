@@ -1,4 +1,4 @@
 services:
   plugin.manager.metatag:
     class: Drupal\metatag\MetatagPluginManager
-    arguments: ['@container.namespaces', '@cache.default', '@language_manager', '@module_handler']
+    arguments: ['@container.namespaces', '@cache.default', '@module_handler']

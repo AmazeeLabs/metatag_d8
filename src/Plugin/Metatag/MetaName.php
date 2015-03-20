@@ -12,21 +12,20 @@
 
 namespace Drupal\metatag\Plugin\Metatag;
 
-// use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Annotation\Plugin;
 use Drupal\Core\Annotation\Translation;
 
 /**
  * Base plugin for defining text Metatag tag types.
  *
- * @Plugin(
- *   id = "meta_name",
+ * @Metatag(
+ *   id = "MetaName",
  *   label = @Translation("Meta tag type: Name"),
  *   category = "basic",
  *   base_tag = TRUE
  * )
  */
-class MetaName {
+class MetaName extends PluginBase {
   private $options = array();
 //  private $name = '';
 //  private $label = '';
@@ -57,6 +56,7 @@ class MetaName {
    * Generate a form element for this meta tag.
    */
   public function form(array $form = array()) {
+    dpm($this);
     // $form[$this->name] = array(
     //   '#type' => 'textfield',
     //   '#title' => $this->label(),
