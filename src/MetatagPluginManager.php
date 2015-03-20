@@ -7,21 +7,26 @@
 
 namespace Drupal\metatag;
 
-use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
+use Drupal\Component\Plugin\CategorizingPluginManagerInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Executable\ExecutableInterface;
+use Drupal\Core\Executable\ExecutableManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
 
 /**
  * A Plugin to manage your meta tag type.
  */
-class MetatagPluginManager extends DefaultPluginManager {
+class MetatagPluginManager extends DefaultPluginManager implements ExecutableManagerInterface, CategorizingPluginManagerInterface {
 
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     $subdir = 'Plugin/Metatag';
 
     // The name of the annotation class that contains the plugin definition.
     $plugin_definition_annotation_name = 'Drupal\metatag\Annotation\Metatag';
+    // $plugin_definition_annotation_name = 'Drupal\Component\Annotation\Plugin';
 
     parent::__construct($subdir, $namespaces, $module_handler, $plugin_definition_annotation_name);
 
