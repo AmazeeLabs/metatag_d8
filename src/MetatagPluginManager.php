@@ -21,7 +21,7 @@ use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
  */
 class MetatagPluginManager extends DefaultPluginManager implements ExecutableManagerInterface, CategorizingPluginManagerInterface {
 
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, LanguageManager $language_manager, ModuleHandlerInterface $module_handler) {
     $subdir = 'Plugin/Metatag';
 
     // The name of the annotation class that contains the plugin definition.
