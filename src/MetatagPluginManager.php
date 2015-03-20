@@ -27,7 +27,7 @@ class MetatagPluginManager extends DefaultPluginManager {
 
     $this->alterInfo('metatag_info');
 
-//    $this->setCacheBackend($cache_backend, 'metatag_info');
+    $this->setCacheBackend($cache_backend, 'metatag_info');
   }
 
   /**

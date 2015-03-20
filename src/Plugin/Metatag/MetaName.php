@@ -14,6 +14,7 @@ namespace Drupal\metatag\Plugin\Metatag;
 
 use Drupal\Component\Annotation\Plugin;
 use Drupal\Core\Annotation\Translation;
+use Drupal\Core\Plugin\PluginBase;
 
 /**
  * Base plugin for defining text Metatag tag types.
