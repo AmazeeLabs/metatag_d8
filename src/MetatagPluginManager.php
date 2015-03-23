@@ -24,7 +24,7 @@ class MetatagPluginManager extends DefaultPluginManager {
     // The name of the annotation class that contains the plugin definition.
     $plugin_definition_annotation_name = 'Drupal\metatag\Annotation\Metatag';
 
-    parent::__construct($subdir, $namespaces, $module_handler, $plugin_definition_annotation_name);
+    parent::__construct($subdir, $namespaces, $module_handler, NULL, $plugin_definition_annotation_name);
 
     $this->alterInfo('metatag_info');
 
