@@ -6,10 +6,9 @@
 
 namespace Drupal\metatag\Plugin\Metatag;
 
-use Drupal\Component\Annotation\Plugin;
 use Drupal\Core\Annotation\Translation;
 use Drupal\metatag\Plugin\Metatag\MetaName;
-use Drupal\metatag\Plugin\Metatag\MetaName;
+use Drupal\metatag\Annotation\Metatag;
 
 /**
  * The basic Description meta tag.

@@ -10,7 +10,7 @@ use Drupal\Component\Annotation\Plugin;
 
 
 /**
- * Defines a FlagType annotation object.
+ * Defines a Metatag annotation object.
  *
  * @Annotation
  */
