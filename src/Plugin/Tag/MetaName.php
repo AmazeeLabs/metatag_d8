@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\Metatag\MetaName.
+ * Contains \Drupal\metatag\Plugin\metatag\Tag\MetaName.
  */
 
 /**
@@ -12,7 +12,7 @@
 
 namespace Drupal\metatag\Plugin\Metatag;
 
-use Drupal\metatag\Annotation\Metatag;
+use Drupal\metatag\Annotation\MetatagTag;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Annotation\Translation;
 //use Drupal\Core\Plugin\PluginBase;
@@ -20,7 +20,7 @@ use Drupal\Core\Annotation\Translation;
 /**
  * Base plugin for defining text Metatag tag types.
  *
- * @Metatag(
+ * @MetatagTag(
  *   id = "MetaName",
  *   label = @Translation("Meta tag type: Name"),
  *   category = "basic",

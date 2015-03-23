@@ -1,19 +1,19 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\Metatag\OgTitle.
+ * Contains \Drupal\metatag\Plugin\metatag\Tag\OgTitle.
  */
 
-namespace Drupal\metatag\Plugin\Metatag;
+namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\Metatag\MetaName;
-use Drupal\metatag\Annotation\Metatag;
+use Drupal\metatag\Plugin\metatag\Tag\MetaName;
+use Drupal\metatag\Annotation\MetatagTag;
 
 /**
- * Base plugin for defining text Metatag tag types.
+ * The Open Graph "Title" meta tag.
  *
- * @Metatag(
+ * @MetatagTag(
  *   id = "OgTitle",
  *   label = @Translation("OG:Title"),
  *   category = "open_graph"

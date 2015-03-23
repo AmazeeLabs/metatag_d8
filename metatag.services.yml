@@ -1,5 +1,4 @@
 services:
-  plugin.manager.metatag.metatag:
-    class: Drupal\metatag\MetatagPluginManager
-    # arguments: ['@container.namespaces', '@cache.default', '@module_handler']
+  plugin.manager.metatag.tag:
+    class: Drupal\metatag\MetatagTagPluginManager
     parent: default_plugin_manager

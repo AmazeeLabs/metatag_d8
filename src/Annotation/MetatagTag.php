@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains the \Drupal\metatag\Annotation\Metatag annotation plugin.
+ * Contains the \Drupal\metatag\Annotation\MetatagTag annotation plugin.
  */
 
 namespace Drupal\metatag\Annotation;
@@ -10,11 +10,11 @@ use Drupal\Component\Annotation\Plugin;
 
 
 /**
- * Defines a Metatag annotation object.
+ * Defines a MetatagTag annotation object.
  *
  * @Annotation
  */
-class Metatag extends Plugin {
+class MetatagTag extends Plugin {
 
   /**
    * The plugin ID.
