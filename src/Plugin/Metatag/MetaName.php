@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\Metatag\MetaName.
+ * Contains \Drupal\metatag\Plugin\MetaTag\MetaName.
  */
 
 /**
@@ -10,7 +10,7 @@
  * used on their own
  */
 
-namespace Drupal\metatag\Plugin\Metatag;
+namespace Drupal\metatag\Plugin\MetaTag;
 
 use Drupal\Component\Annotation\Plugin;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;

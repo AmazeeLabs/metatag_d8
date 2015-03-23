@@ -34,7 +34,7 @@ class MetatagFirehose extends WidgetBase {
    * @return array
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $metatag_service = \Drupal::service('plugin.manager.metatag');
+    $metatag_service = \Drupal::service('plugin.manager.metatag.tag');
     $metatag_types = $metatag_service->getDefinitions();
     dpm($metatag_types);
     // $raw = isset($items[$delta]->value) ? $items[$delta]->value : '';
