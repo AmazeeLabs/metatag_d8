@@ -13,16 +13,21 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\AppConsole\Command\ContainerAwareCommand;
 
+/**
+ * Class GenerateTag.
+ *
+ * @package Drupal\metatag
+ */
 class GenerateTag extends ContainerAwareCommand {
   /**
    * {@inheritdoc}
    */
   protected function configure() {
     $this
-      ->setName('metatag:generatetag')
-      ->setDescription($this->trans('command.metatag.generatetag.description'))
-      ->addArgument('name', InputArgument::OPTIONAL, $this->trans('command.metatag.generatetag.arguments.name'))
-      ->addOption('yell', NULL, InputOption::VALUE_NONE, $this->trans('command.metatag.generatetag.options.yell'));
+      ->setName('metatag:generate:tag')
+      ->setDescription($this->trans('command.metatag.generate.tag.description'))
+      ->addArgument('name', InputArgument::OPTIONAL, $this->trans('command.metatag.generate.tag.arguments.name'))
+      ->addOption('yell', NULL, InputOption::VALUE_NONE, $this->trans('command.metatag.generate.tag.options.yell'));
   }
 
   /**
@@ -50,4 +55,5 @@ class GenerateTag extends ContainerAwareCommand {
 
     $output->writeln($text);
   }
+
 }

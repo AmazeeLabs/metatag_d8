@@ -17,14 +17,14 @@ use Drupal\Component\Annotation\Plugin;
 class MetatagTag extends Plugin {
 
   /**
-   * The plugin ID.
+   * The meta tag plugin's internal ID, in machine name format.
    *
    * @var string
    */
   public $id;
 
   /**
-   * The title of the plugin.
+   * The display label/name of the meta tag plugin.
    *
    * @var \Drupal\Core\Annotation\Translation
    *
@@ -33,17 +33,24 @@ class MetatagTag extends Plugin {
   public $label;
 
   /**
-   * The category this meta tag fits in.
+   * Proper name of the actual meta tag itself.
    *
    * @var string
    */
-  public $category;
+  public $name;
 
   /**
-   * Whether or not this is a base tag class.
+   * The group this meta tag fits in, corresponds to a MetatagGroup plugn.
    *
-   * @var boolean
+   * @var string
    */
-  public $base_tag;
-  
+  public $group;
+
+  /**
+   * Weight of the tag.
+   *
+   * @var int
+   */
+  public $weight;
+
 }

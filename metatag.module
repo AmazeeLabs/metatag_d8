@@ -2,32 +2,71 @@
 
 /**
  * @file
- * Contains metatag.module
+ * Contains metatag.module.
  */
 
 // Used by hook_help().
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
  */
 function metatag_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
   switch ($route_name) {
     // Main module help for the metatag module.
     case 'help.page.metatag':
-      $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Meta tags are awesome.') . '</p>';
-      return $output;
-    break;
+      $output .= '<p>' . t('This module allows you to automatically provide structured metadata, aka "meta
+tags", about your website and web pages.') . '</p>';
+      break;
+  }
+
+  return $output;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function metatag_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Disable the cardinality option on the field storage settings form for
+  // metatag fields.
+  if ($form_id == 'field_ui_field_storage_edit_form') {
+    if ($form['#field']->getType() == 'metatag') {
+      $form['field_storage']['cardinality_container']['#prefix'] = t("Metatag fields must be singular.");
+      $form['field_storage']['cardinality_container']['#disabled'] = TRUE;
+      $form['field_storage']['cardinality_container']['cardinality']['#disabled'] = TRUE;
+      $form['field_storage']['cardinality_container']['cardinality_number']['#disabled'] = TRUE;
+      unset($form['field_storage']['cardinality_container']['cardinality_number']['#states']);
+    }
   }
 }
 
 /**
- * Implements hook_theme().
+ * Implements hook_page_attachments().
+ *
+ * Load all meta tags for this page.
  */
-// function metatag_theme() {
-//   $theme = [];
-//
-//   return $theme;
-// }
+function metatag_page_attachments(array &$attachments) {
+  $route_match = \Drupal::routeMatch();
+
+  // Look for a canonical entity view page, e.g. node/{nid}, user/{uid}, etc.
+  $matches = array();
+  preg_match('/entity\.(.*)\.canonical/', $route_match->getRouteName(), $matches);
+  if (!empty($matches[1])) {
+    // Load the entity from the route's parameters.
+    $entity = $route_match->getParameter($matches[1]);
+
+    // Get the manager service to do all the work.
+    $manager = \Drupal::service('metatag.manager');
+
+    // Assemble the attachments array from all the metatag plugins.
+    $metatag_attachments = $manager->attachmentsFromEntity($entity);
+
+    // If any Metatag items were found, append them.
+    if (!empty($metatag_attachments)) {
+      $attachments = array_merge($attachments, $metatag_attachments);
+    }
+  }
+}

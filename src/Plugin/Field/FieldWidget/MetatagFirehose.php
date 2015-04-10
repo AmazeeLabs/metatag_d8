@@ -9,9 +9,10 @@ namespace Drupal\metatag\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
- * Custom widget for choosing an option from a map.
+ * Advanced widget for metatag field.
  *
  * @FieldWidget(
  *   id = "metatag_firehose",
@@ -22,35 +23,63 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class MetatagFirehose extends WidgetBase {
+
   /**
-   * Field API widget form.
-   *
-   * @param FieldItemListInterface $items
-   * @param int $delta
-   * @param array $element
-   * @param array $form
-   * @param FormStateInterface $form_state
-   *
-   * @return array
+   * Instance of MetatagManager service.
+   */
+  protected $metatagManager;
+
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+
+    $this->metatagManager = \Drupal::service('metatag.manager');
+  }
+
+
+  /**
+   * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $metatag_service = \Drupal::service('plugin.manager.metatag.tag');
-    $metatag_types = $metatag_service->getDefinitions();
-    dpm($metatag_types);
-    // $values = array();
-    // if (isset($items[$delta]->value)) {
-    //   $values = unserialize($items[$delta]->value);
-    // }
 
-    // foreach ($metatag_types as $tag_name => $tag_info) {
-    //   dpm($tag_info);
-    //   dpm((string)$tag_info['label']);
-    //   if (empty($tag_info['base_tag'])) {
-    //     $tag = $metatag_service->createInstance($tag_name);
-    //     $element['value'] = $element + $tag->form();
-    //   }
-    // }
+    $item = $items[$delta];
+
+    // Retrieve the values for each metatag from the serialized array.
+    $values = array();
+    if (!empty($item->value)) {
+      $values = unserialize($item->value);
+    }
+
+    // Create the form element.
+    $element = $this->metatagManager->form($values, $element);
 
     return $element;
+
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    // Flatten the values array to remove the groups and then serialize all the
+    // metatags into one value for storage.
+    foreach ($values as &$value) {
+      $flattened_value = array();
+      foreach ($value as $group) {
+        // Exclude the "original delta" value.
+        if (is_array($group)) {
+          foreach ($group as $tag_id => $tag) {
+            $flattened_value[$tag_id] = $tag;
+          }
+        }
+      }
+      $value = serialize($flattened_value);
+    }
+
+    return $values;
+  }
+
 }
