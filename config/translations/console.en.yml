@@ -1,9 +1,8 @@
 command:
-    metatag:
-        generate:
-            tag:
-                description: 'Greet someone'
-                arguments:
-                    name: 'Who do you want to greet?'
-                options:
-                    yell: 'If set, the task will yell in uppercase letters'
+  generate:
+    tag:
+      description: 'Greet someone'
+      arguments:
+        name: 'Who do you want to greet?'
+      options:
+        yell: 'If set, the task will yell in uppercase letters'

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\metatag\Command\GenerateTag.
+ * Contains Drupal\metatag\Command\GenerateTagCommand.
  */
 
 namespace Drupal\metatag\Command;
@@ -18,13 +18,13 @@ use Drupal\AppConsole\Command\ContainerAwareCommand;
  *
  * @package Drupal\metatag
  */
-class GenerateTag extends ContainerAwareCommand {
+class GenerateTagCommand extends ContainerAwareCommand {
   /**
    * {@inheritdoc}
    */
   protected function configure() {
     $this
-      ->setName('metatag:generate:tag')
+      ->setName('generate:metatag:tag')
       ->setDescription($this->trans('command.metatag.generate.tag.description'))
       ->addArgument('name', InputArgument::OPTIONAL, $this->trans('command.metatag.generate.tag.arguments.name'))
       ->addOption('yell', NULL, InputOption::VALUE_NONE, $this->trans('command.metatag.generate.tag.options.yell'));
