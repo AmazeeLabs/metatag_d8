@@ -7,53 +7,229 @@
 
 namespace Drupal\metatag\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\AppConsole\Command\ContainerAwareCommand;
+use Drupal\AppConsole\Command\GeneratorCommand;
+use Drupal\AppConsole\Command\Helper\ServicesTrait;
+use Drupal\AppConsole\Command\Helper\ModuleTrait;
+use Drupal\AppConsole\Command\Helper\FormTrait;
+use Drupal\AppConsole\Command\Helper\ConfirmationTrait;
+use Drupal\metatag\Generator\MetatagTagGenerator;
 
 /**
  * Class GenerateTag.
  *
  * @package Drupal\metatag
  */
-class GenerateTagCommand extends ContainerAwareCommand {
+class GenerateTagCommand extends GeneratorCommand {
+  use ServicesTrait;
+  use ModuleTrait;
+  use FormTrait;
+  use ConfirmationTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct($translator) {
+    parent::__construct($translator);
+
+    $this->metatagManager = \Drupal::service('metatag.manager');
+  }
+  
   /**
    * {@inheritdoc}
    */
   protected function configure() {
     $this
       ->setName('generate:metatag:tag')
-      ->setDescription($this->trans('command.metatag.generate.tag.description'))
-      ->addArgument('name', InputArgument::OPTIONAL, $this->trans('command.metatag.generate.tag.arguments.name'))
-      ->addOption('yell', NULL, InputOption::VALUE_NONE, $this->trans('command.metatag.generate.tag.options.yell'));
+      ->setDescription($this->trans('commands.generate.metatag.tag.description'))
+      ->setHelp($this->trans('commands.generate.metatag.tag.help'))
+      ->addOption('module', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.common.options.module'))
+      ->addOption('name', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.name'))
+      ->addOption('label', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.label'))
+      ->addOption('plugin-id', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.plugin_id'))
+      ->addOption('group', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.group'))
+      ->addOption('weight', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.weight'))
+      ;
   }
 
   /**
    * {@inheritdoc}
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
-    $name = $input->getArgument('name');
-    if ($name) {
-      $text = 'Hello ' . $name;
-    }
-    else {
-      $text = 'Hello';
-    }
+    $dialog = $this->getDialogHelper();
 
-    $text = sprintf(
-      '%s, %s: %s',
-      $text,
-      'I am a new generated command for the module',
-      $this->getModule()
-    );
-
-    if ($input->getOption('yell')) {
-      $text = strtoupper($text);
+    // @see use Drupal\AppConsole\Command\Helper\ConfirmationTrait::confirmationQuestion
+    if ($this->confirmationQuestion($input, $output, $dialog)) {
+      return;
     }
 
-    $output->writeln($text);
+    $module = $input->getOption('module');
+    $name = $input->getOption('name');
+    $label = $input->getOption('label');
+    $plugin_id = $input->getOption('plugin-id');
+    $group = $input->getOption('group');
+    $weight = $input->getOption('weight');
+
+    // @see use Drupal\AppConsole\Command\Helper\ServicesTrait::buildServices
+    $build_services = $this->buildServices($services);
+
+    $this
+      ->getGenerator()
+      ->generate($module, $name, $label, $plugin_id, $group, $weight);
+
+    $this->getHelper('chain')->addCommand('cache:rebuild', ['--cache' => 'discovery']);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function interact(InputInterface $input, OutputInterface $output) {
+    $dialog = $this->getDialogHelper();
+
+    // --module option.
+    $module = $input->getOption('module');
+    if (empty($module)) {
+      // @see Drupal\AppConsole\Command\Helper\ModuleTrait::moduleQuestion
+      $module = $this->moduleQuestion($output, $dialog);
+    }
+    $input->setOption('module', $module);
+
+    // --name option.
+    $name = $input->getOption('name');
+    if (empty($name)) {
+      $name = $dialog->askAndValidate(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.name'), ''),
+        function($class_name) {
+          // @todo Validation?
+          return $class_name;
+        },
+        FALSE,
+        '',
+        NULL
+      );
+    }
+    $input->setOption('name', $name);
+
+    // --label option.
+    $label = $input->getOption('label');
+    if (empty($label)) {
+      $label = $dialog->ask(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.label'), ''),
+        ''
+      );
+    }
+    $input->setOption('label', $label);
+
+    // Generate some alternative versions of the tag name.
+    $class_name = $this->nameToClassName($name);
+
+    // --plugin-id option.
+    $plugin_id = $input->getOption('plugin-id');
+    if (empty($plugin_id)) {
+      $plugin_id = $dialog->ask(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.plugin_id'), $class_name),
+        $class_name
+      );
+    }
+    $input->setOption('plugin-id', $plugin_id);
+
+    // --group option.
+    $group = $input->getOption('group');
+    if (empty($group)) {
+      $group = $dialog->askAndValidate(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.group'), ''),
+        function($group) {
+          return $this->validateGroupExist($group);
+        },
+        FALSE,
+        '',
+        $this->getGroups()
+      );
+    }
+    $input->setOption('group', $group);
+
+    // --weight option.
+    $weight = $input->getOption('weight');
+    if (is_null($weight)) {
+      $weight = $dialog->askAndValidate(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.weight'), '0'),
+        function($weight) {
+          return is_int($weight);
+        },
+        FALSE,
+        '0',
+        NULL
+      );
+    }
+    $input->setOption('weight', $weight);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function createGenerator() {
+    return new MetatagTagGenerator();
+  }
+
+  /**
+   * Convert the meta tag's name to a class name.
+   *
+   * @param string $name
+   *   The meta tag name to convert.
+   *
+   * @return string
+   *   The original string with all non-alphanumeric characters removed and
+   *   converted to CamelCase.
+   */
+  private function nameToClassName($name) {
+    $string_utils = $this->getStringUtils();
+
+    // Convert some characters to spaces so that each portion of the string can
+    // then be considered separate words and collapsed together nicely by
+    // the humanToCamelCase() method.
+    $name = preg_replace($string_utils::REGEX_MACHINE_NAME_CHARS, ' ', $name);
+    return $string_utils->humanToCamelCase($name);
+  }
+
+  /**
+   * All of the meta tag groups.
+   *
+   * @return array
+   *   A.
+   */
+  private function getGroups() {
+    // $groups = $this->metatagManager->groupDefinitions();
+    // print_r($groups);print("\n");
+    // return $groups;
+    return array_keys($this->metatagManager->groupDefinitions());
+  }
+
+  /**
+   *
+   *
+   * @param string $group
+   *
+   * @return string
+   *   The group's name, if available, otherwise and empty string.
+   */
+  private function validateGroupExist($group) {
+    $groups = $this->getGroups();
+    if (isset($groups[$group])) {
+      return $group;
+    }
+    return '';
+  }
 }

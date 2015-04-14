@@ -1,8 +1,21 @@
-command:
+commands:
   generate:
-    tag:
-      description: 'Greet someone'
-      arguments:
-        name: 'Who do you want to greet?'
-      options:
-        yell: 'If set, the task will yell in uppercase letters'
+    metatag:
+      tag:
+        description: Gemnerate a meta tag.
+        help: The <info>generate:metatag:tag</info> command helps you generate a new meta tag for use with the Metatag module.
+        welcome: Welcome to the Metatag tag generator
+        options:
+          module: common.options.module
+          plugin_id: Internal name for the meta tag.
+          name: Meta tag's HTML "name".
+          label: The user-friendly name for this meta tag.
+          group: The meta tag's group.
+          weight: The sort order for this meta tag.
+        questions:
+          module: common.questions.module
+          plugin_id: Enter the internal name for the meta tag plugin
+          name: Enter the meta tag's formal name, e.g. for the Open Graph "Title" tag use "og:title"
+          label: Enter a user-friendly version of the meta tag's name
+          group: Select the group the meta tag will use
+          weight: Enter the sort order for the meta tag

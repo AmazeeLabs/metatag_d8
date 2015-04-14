@@ -28,6 +28,9 @@ The primary features include:
 * A plugin interface allowing for additional meta tags to be easily added via
   custom modules.
 
+* The front page's meta tags can be customized if a node is used for the front
+  page.
+
 
 Standard usage scenario
 --------------------------------------------------------------------------------
@@ -85,7 +88,6 @@ Some modules are available that extend Metatag with additional functionality:
 Todo
 --------------------------------------------------------------------------------
 Urgent:
-* Front page meta tag output.
 * Insert some (token-based) default values as temporary solution.
 * Proper output for the page title tag.
 * DrupalConsole command for generating tags.
@@ -94,6 +96,12 @@ Soon:
 * Generate all of the meta tags from D7.
 * Update meta group descriptions from D7.
 * Global configuration / defaults.
+  * Global defaults
+  * Entity defaults
+  * Custom pages
+    * Front page
+    * 403 page
+    * 404 page
 * Global settings.
 
 Later, possibly post-1.0:
@@ -102,7 +110,7 @@ Later, possibly post-1.0:
 * Per-path configuration.
 
 
-Credits / Contact
+Credits / contact
 --------------------------------------------------------------------------------
 Currently maintained by Damien McKenna [1] and Dave Reid [2]. Drupal 7 module
 originally written by Dave Reid. Drupal 8 port by Damien McKenna and Michelle

@@ -57,7 +57,6 @@ class MetatagFirehose extends WidgetBase {
     $element = $this->metatagManager->form($values, $element);
 
     return $element;
-
   }
 
   /**

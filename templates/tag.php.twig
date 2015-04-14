@@ -1,0 +1,30 @@
+{% extends "generator.php.twig" %}
+
+{% block file_path %}
+Drupal\{{module}}\Plugin\metatag\Tag\{{class_name}}.
+{% endblock %}
+
+{% block namespace_class %}
+namespace Drupal\{{module}}\Plugin\metatag\Tag;
+{% endblock %}
+
+{% block use_class %}
+use Drupal\Core\Annotation\Translation;
+use Drupal\metatag\Plugin\metatag\Tag\TagBase;
+use Drupal\metatag\Annotation\MetatagTag;
+{% endblock %}
+
+{% block class_declaration %}
+/**
+ * Provides a '{{ name }}' meta tag plugin.
+ *
+ * @MetatagTag(
+ *   id = "{{ plugin_id }}",
+ *   label = @Translation("{{ label }}"),
+ *   name = "title",
+ *   group = "basic",
+ *   weight = 1
+ * )
+ */
+class {{class_name}} extends TagBase
+{% endblock %}
