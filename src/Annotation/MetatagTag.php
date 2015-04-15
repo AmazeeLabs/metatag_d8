@@ -33,6 +33,15 @@ class MetatagTag extends Plugin {
   public $label;
 
   /**
+   * A longer explanation of what the field is for.
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
+   */
+  public $description;
+
+  /**
    * Proper name of the actual meta tag itself.
    *
    * @var string

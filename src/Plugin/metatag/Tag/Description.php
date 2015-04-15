@@ -16,6 +16,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  * @MetatagTag(
  *   id = "description",
  *   label = @Translation("Description"),
+ *   description = @Translation(""),
  *   name = "description",
  *   group = "basic",
  *   weight = 2
@@ -23,5 +24,4 @@ use Drupal\metatag\Annotation\MetatagTag;
  */
 class Description extends TagBase {
   // Nothing here yet. Just a placeholder class for a plugin.
-
 }

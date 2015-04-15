@@ -16,6 +16,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  * @MetatagTag(
  *   id = "title",
  *   label = @Translation("Page title"),
+ *   description = @Translation(""),
  *   name = "title",
  *   group = "basic",
  *   weight = 1

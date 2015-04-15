@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\metatag\Tag\OgTitle.
+ * Contains Drupal\metatag\Plugin\metatag\Tag\OgImage.
  */
 
 namespace Drupal\metatag\Plugin\metatag\Tag;
@@ -11,17 +11,17 @@ use Drupal\metatag\Plugin\metatag\Tag\TagBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
- * The Open Graph "Title" meta tag.
+ * Provides a plugin for the 'og:image' meta tag.
  *
  * @MetatagTag(
- *   id = "og_title",
- *   label = @Translation("Title"),
+ *   id = "og_image",
+ *   label = @Translation("Image"),
  *   description = @Translation(""),
- *   name = "og:title",
+ *   name = "og:image",
  *   group = "open_graph",
- *   weight = 1
+ *   weight = 2
  * )
  */
-class OgTitle extends TagBase {
+class OgImage extends TagBase {
   // Nothing here yet. Just a placeholder class for a plugin.
 }

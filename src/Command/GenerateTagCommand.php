@@ -51,8 +51,12 @@ class GenerateTagCommand extends GeneratorCommand {
         $this->trans('commands.generate.metatag.tag.options.name'))
       ->addOption('label', '', InputOption::VALUE_REQUIRED,
         $this->trans('commands.generate.metatag.tag.options.label'))
+      ->addOption('description', '', InputOption::VALUE_OPTIONAL,
+        $this->trans('commands.generate.metatag.tag.options.description'))
       ->addOption('plugin-id', '', InputOption::VALUE_REQUIRED,
         $this->trans('commands.generate.metatag.tag.options.plugin_id'))
+      ->addOption('class-name', '', InputOption::VALUE_REQUIRED,
+        $this->trans('commands.generate.metatag.tag.options.class_name'))
       ->addOption('group', '', InputOption::VALUE_REQUIRED,
         $this->trans('commands.generate.metatag.tag.options.group'))
       ->addOption('weight', '', InputOption::VALUE_REQUIRED,
@@ -75,6 +79,7 @@ class GenerateTagCommand extends GeneratorCommand {
     $name = $input->getOption('name');
     $label = $input->getOption('label');
     $plugin_id = $input->getOption('plugin-id');
+    $class_name = $input->getOption('class-name');
     $group = $input->getOption('group');
     $weight = $input->getOption('weight');
 
@@ -83,7 +88,7 @@ class GenerateTagCommand extends GeneratorCommand {
 
     $this
       ->getGenerator()
-      ->generate($module, $name, $label, $plugin_id, $group, $weight);
+      ->generate($module, $name, $label, $plugin_id, $class_name, $group, $weight);
 
     $this->getHelper('chain')->addCommand('cache:rebuild', ['--cache' => 'discovery']);
   }
@@ -130,19 +135,40 @@ class GenerateTagCommand extends GeneratorCommand {
     }
     $input->setOption('label', $label);
 
-    // Generate some alternative versions of the tag name.
-    $class_name = $this->nameToClassName($name);
+    // --description option.
+    $description = $input->getOption('description');
+    if (empty($label)) {
+      $description = $dialog->ask(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.description'), ''),
+        ''
+      );
+    }
+    $input->setOption('description', $description);
 
     // --plugin-id option.
     $plugin_id = $input->getOption('plugin-id');
     if (empty($plugin_id)) {
+      $plugin_id = $this->nameToPluginId($name);
       $plugin_id = $dialog->ask(
         $output,
-        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.plugin_id'), $class_name),
-        $class_name
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.plugin_id'), $plugin_id),
+        $plugin_id
       );
     }
     $input->setOption('plugin-id', $plugin_id);
+
+    // --class-name option.
+    $class_name = $input->getOption('class-name');
+    if (empty($class_name)) {
+      $class_name = $this->nameToClassName($name);
+      $class_name = $dialog->ask(
+        $output,
+        $dialog->getQuestion($this->trans('commands.generate.metatag.tag.questions.class_name'), $class_name),
+        $class_name
+      );
+    }
+    $input->setOption('class-name', $class_name);
 
     // --group option.
     $group = $input->getOption('group');
@@ -185,6 +211,22 @@ class GenerateTagCommand extends GeneratorCommand {
   }
 
   /**
+   * Convert the meta tag's name to a plugin ID.
+   *
+   * @param string $name
+   *   The meta tag name to convert.
+   *
+   * @return string
+   *   The original string with all non-alphanumeric characters converted to
+   *   underline chars.
+   */
+  private function nameToPluginId($name) {
+    $string_utils = $this->getStringUtils();
+
+    return $string_utils->createMachineName($name);
+  }
+
+  /**
    * Convert the meta tag's name to a class name.
    *
    * @param string $name
@@ -198,8 +240,8 @@ class GenerateTagCommand extends GeneratorCommand {
     $string_utils = $this->getStringUtils();
 
     // Convert some characters to spaces so that each portion of the string can
-    // then be considered separate words and collapsed together nicely by
-    // the humanToCamelCase() method.
+    // then be considered separate words and collapsed together nicely by the
+    // humanToCamelCase() method.
     $name = preg_replace($string_utils::REGEX_MACHINE_NAME_CHARS, ' ', $name);
     return $string_utils->humanToCamelCase($name);
   }

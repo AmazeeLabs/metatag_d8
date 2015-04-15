@@ -38,6 +38,15 @@ abstract class TagBase extends PluginBase {
   protected $label;
 
   /**
+   * A longer explanation of what the field is for.
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
+   */
+  protected $description;
+
+  /**
    * The category this meta tag fits in.
    *
    * @var string
@@ -62,6 +71,7 @@ abstract class TagBase extends PluginBase {
     $this->id = $plugin_definition['id'];
     $this->name = $plugin_definition['name'];
     $this->label = $plugin_definition['label'];
+    $this->base = $plugin_definition['base'];
     $this->group = $plugin_definition['group'];
   }
 
@@ -71,6 +81,10 @@ abstract class TagBase extends PluginBase {
 
   public function label() {
     return $this->label;
+  }
+
+  public function description() {
+    return $this->description;
   }
 
   public function name() {
@@ -99,7 +113,7 @@ abstract class TagBase extends PluginBase {
       '#default_value' => $this->value(),
       '#maxlength' => 255,
       '#required' => $element['#required'],
-      '#description' => "Value for " . $this->name(),
+      '#description' => $this->description(),
       '#element_validate' => array(array(get_class($this), 'validateTag')),
     );
 

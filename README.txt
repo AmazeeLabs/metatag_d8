@@ -31,6 +31,9 @@ The primary features include:
 * The front page's meta tags can be customized if a node is used for the front
   page.
 
+* Integration with DrupalConsole [1] to provide a quick method of generating new
+  meta tags.
+
 
 Standard usage scenario
 --------------------------------------------------------------------------------
@@ -75,6 +78,20 @@ For any entity / bundle types that require meta tag output:
   a popup to list & insert the available tokens.
 
 
+DrupalConsole integration
+--------------------------------------------------------------------------------
+Using the DrupalConsole, it is possible to generate new meta tags, either for
+use in new custom modules that require custom meta tags, or to create patches
+for extending Metatag's options.
+
+To generate a new tag, install DrupalConsole and then use the following command:
+
+  drupal generate:metatag:tag
+
+This will guide the site builder through the necessary steps to create a new
+meta tag plugin and add it to a module.
+
+
 Related modules
 --------------------------------------------------------------------------------
 Some modules are available that extend Metatag with additional functionality:
@@ -90,10 +107,27 @@ Todo
 Urgent:
 * Insert some (token-based) default values as temporary solution.
 * Proper output for the page title tag.
-* DrupalConsole command for generating tags.
 
 Soon:
 * Generate all of the meta tags from D7.
+  * Basic
+  * Advanced
+  * Open Graph
+  * Twitter Cards
+  * Dublin Core Basic
+  * Dublin Core Advanced
+  * Site Validation
+  * App Links
+* New meta tag types:
+  * Link.
+  * Date interval.
+  * Checkboxes.
+* Tidy output.
+* API expansion:
+  * Multiple values.
+  * Context.
+  * Dependencies.
+  * Validation.
 * Update meta group descriptions from D7.
 * Global configuration / defaults.
   * Global defaults
@@ -112,11 +146,11 @@ Later, possibly post-1.0:
 
 Credits / contact
 --------------------------------------------------------------------------------
-Currently maintained by Damien McKenna [1] and Dave Reid [2]. Drupal 7 module
+Currently maintained by Damien McKenna [2] and Dave Reid [3]. Drupal 7 module
 originally written by Dave Reid. Drupal 8 port by Damien McKenna and Michelle
-Cox [3], and sponsored by Mediacurrent [4].
+Cox [4], and sponsored by Mediacurrent [5].
 
-Ongoing development is sponsored by Mediacurrent [4] and Palantir.net [5].
+Ongoing development is sponsored by Mediacurrent and Palantir.net [6].
 
 The best way to contact the authors is to submit an issue, be it a support
 request, a feature request or a bug report, in the project issue queue:
@@ -125,8 +159,9 @@ request, a feature request or a bug report, in the project issue queue:
 
 References
 --------------------------------------------------------------------------------
-1: https://www.drupal.org/u/damienmckenna
-2: https://www.drupal.org/u/dave-reid
-3: https://www.drupal.org/u/michelle
-4: http://www.mediacurrent.com/
-5: http://www.palantir.net/
+1: https://www.drupal.org/project/console
+2: https://www.drupal.org/u/damienmckenna
+3: https://www.drupal.org/u/dave-reid
+4: https://www.drupal.org/u/michelle
+5: http://www.mediacurrent.com/
+6: http://www.palantir.net/
