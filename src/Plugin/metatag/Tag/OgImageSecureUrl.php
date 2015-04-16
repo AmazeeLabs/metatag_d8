@@ -7,7 +7,7 @@
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\metatag\Tag\TagBase;
+use Drupal\metatag\Plugin\metatag\Tag\OpenGraphBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
@@ -22,6 +22,6 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   weight = 4
  * )
  */
-class OgImageSecureUrl extends TagBase {
+class OgImageSecureUrl extends OpenGraphBase {
   // Nothing here yet. Just a placeholder class for a plugin.
 }
