@@ -115,6 +115,7 @@ Soon:
   * Advanced
   * Open Graph
   * Twitter Cards
+  * Facebook
   * Dublin Core Basic
   * Dublin Core Advanced
   * Site Validation
@@ -123,12 +124,14 @@ Soon:
   * Link.
   * Date interval.
   * Checkboxes.
+  * Properties (Open Graph).
 * Tidy output.
 * API expansion:
   * Multiple values.
   * Context.
   * Dependencies.
   * Validation.
+  * RDF namespaces
 * Update meta group descriptions from D7.
 * Global configuration / defaults.
   * Global defaults
