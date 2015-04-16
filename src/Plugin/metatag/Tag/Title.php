@@ -16,10 +16,10 @@ use Drupal\metatag\Annotation\MetatagTag;
  * @MetatagTag(
  *   id = "title",
  *   label = @Translation("Page title"),
- *   description = @Translation(""),
+ *   description = @Translation("The text to display in the title bar of a visitor's web browser when they view this page. This meta tag may also be used as the title of the page when a visitor bookmarks or favorites this page."),
  *   name = "title",
  *   group = "basic",
- *   weight = 1
+ *   weight = -1
  * )
  */
 class Title extends TagBase {

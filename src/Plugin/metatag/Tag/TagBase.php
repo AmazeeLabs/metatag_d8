@@ -71,28 +71,28 @@ abstract class TagBase extends PluginBase {
     $this->id = $plugin_definition['id'];
     $this->name = $plugin_definition['name'];
     $this->label = $plugin_definition['label'];
-    $this->base = $plugin_definition['base'];
+    $this->description = $plugin_definition['description'];
     $this->group = $plugin_definition['group'];
+    $this->weight = $plugin_definition['weight'];
   }
 
   public function id() {
     return $this->id;
   }
-
   public function label() {
     return $this->label;
   }
-
   public function description() {
     return $this->description;
   }
-
   public function name() {
     return $this->name;
   }
-
   public function group() {
     return $this->group;
+  }
+  public function weight() {
+    return $this->weight;
   }
 
   /**

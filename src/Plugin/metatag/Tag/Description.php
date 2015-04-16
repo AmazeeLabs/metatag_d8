@@ -16,7 +16,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  * @MetatagTag(
  *   id = "description",
  *   label = @Translation("Description"),
- *   description = @Translation(""),
+ *   description = @Translation("A brief and concise summary of the page's content, preferably 150 characters or less. The description meta tag may be used by search engines to display a snippet about the page in search results."),
  *   name = "description",
  *   group = "basic",
  *   weight = 2

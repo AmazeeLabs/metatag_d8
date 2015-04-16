@@ -19,7 +19,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   description = @Translation(""),
  *   name = "og:title",
  *   group = "open_graph",
- *   weight = 1
+ *   weight = -1
  * )
  */
 class OgTitle extends TagBase {
