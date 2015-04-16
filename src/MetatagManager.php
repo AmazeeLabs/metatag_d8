@@ -168,7 +168,7 @@ class MetatagManager {
 
     // Add the outer fieldset.
     $element += array(
-      '#type' => 'fieldset',
+      '#type' => 'details',
     );
 
     // Add the token browser.
@@ -176,13 +176,17 @@ class MetatagManager {
 
     $groups_and_tags = $this->sortedGroupsWithTags();
 
+    $first = TRUE;
     foreach ($groups_and_tags as $group_id => $group) {
       // Only act on groups that have tags and are in the list of included
       // groups (unless that list is null).
       if (isset($group['tags']) && (is_null($included_groups) || in_array($group_id, $included_groups))) {
         // Create the fieldset.
-        $element[$group_id]['#type'] = 'fieldset';
+        $element[$group_id]['#type'] = 'details';
         $element[$group_id]['#title'] = $group['label'];
+        $element[$group_id]['#description'] = $group['description'];
+        $element[$group_id]['#open'] = $first;
+        $first = FALSE;
 
         foreach ($group['tags'] as $tag_id => $tag) {
           // Only act on tags in the included tags list, unless that is null.

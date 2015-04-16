@@ -13,12 +13,11 @@ use Drupal\metatag\Plugin\metatag\Group\GroupBase;
  *
  * @MetatagGroup(
  *   id = "basic",
- *   label = @Translation("Basic"),
- *   description = "Basic tags",
+ *   label = @Translation("Basic tags"),
+ *   description = @Translation("Simple meta tags."),
  *   weight = 1
  * )
  */
 class Basic extends GroupBase {
   // Inherits everything from Base.
-
 }

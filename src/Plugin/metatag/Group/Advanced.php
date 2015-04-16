@@ -14,11 +14,10 @@ use Drupal\metatag\Plugin\metatag\Group\GroupBase;
  * @MetatagGroup(
  *   id = "advanced",
  *   label = @Translation("Advanced"),
- *   description = "Advanced tags",
+ *   description = @Translation("Meta tags that might not be needed by many sites."),
  *   weight = 2
  * )
  */
 class Advanced extends GroupBase {
   // Inherits everything from Base.
-
 }
