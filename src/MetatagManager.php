@@ -53,6 +53,7 @@ class MetatagManager {
     }
 
     $attachments = $this->generateElements($tags, $entity);
+
     return $attachments;
   }
 

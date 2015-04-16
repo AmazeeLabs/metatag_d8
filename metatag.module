@@ -52,9 +52,9 @@ function metatag_page_attachments(array &$attachments) {
   $route_match = \Drupal::routeMatch();
 
   // Look for a canonical entity view page, e.g. node/{nid}, user/{uid}, etc.
-  if (metatag_is_supported_route($route_match->getRouteName())) {
+  if ($entity_type = metatag_is_supported_route($route_match->getRouteName())) {
     // Load the entity from the route's parameters.
-    $entity = $route_match->getParameter($matches[1]);
+    $entity = $route_match->getParameter($entity_type);
 
     // Get the manager service to do all the work.
     $manager = \Drupal::service('metatag.manager');
@@ -84,7 +84,7 @@ function metatag_is_supported_route($route_name) {
 
   preg_match('/entity\.(.*)\.canonical/', $route_name, $matches);
   if (!empty($matches[1])) {
-    $supported = TRUE;
+    $supported = $matches[1];
   }
 
   return $supported;
