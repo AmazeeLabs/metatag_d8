@@ -107,6 +107,7 @@ Todo
 Urgent:
 * Insert some (token-based) default values as temporary solution.
 * Proper output for the page title tag.
+* Annotation placeholders.
 
 Soon:
 * Generate all of the meta tags from D7.
@@ -142,6 +143,7 @@ Later, possibly post-1.0:
 * Migrate.module integration.
 * Views integration.
 * Per-path configuration.
+* Devel Generate?
 
 
 Credits / contact
