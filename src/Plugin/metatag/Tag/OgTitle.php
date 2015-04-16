@@ -16,7 +16,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  * @MetatagTag(
  *   id = "og_title",
  *   label = @Translation("Title"),
- *   description = @Translation(""),
+ *   description = @Translation("The title of the content, e.g., <em>The Rock</em>."),
  *   name = "og:title",
  *   group = "open_graph",
  *   weight = -1
