@@ -15,7 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
 function metatag_help($route_name, RouteMatchInterface $route_match) {
   $output = '';
   switch ($route_name) {
-    // Main module help for the metatag module.
+    // Main module help for the Metatag module.
     case 'help.page.metatag':
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('This module allows you to automatically provide structured metadata, aka "meta
@@ -49,18 +49,11 @@ function metatag_form_alter(&$form, FormStateInterface $form_state, $form_id) {
  * Load all meta tags for this page.
  */
 function metatag_page_attachments(array &$attachments) {
-  $route_match = \Drupal::routeMatch();
+  $metatag_attachments = drupal_static('metatag_attachments');
 
-  // Look for a canonical entity view page, e.g. node/{nid}, user/{uid}, etc.
-  if ($entity_type = metatag_is_supported_route($route_match->getRouteName())) {
-    // Load the entity from the route's parameters.
-    $entity = $route_match->getParameter($entity_type);
-
-    // Get the manager service to do all the work.
-    $manager = \Drupal::service('metatag.manager');
-
-    // Assemble the attachments array from all the metatag plugins.
-    $metatag_attachments = $manager->attachmentsFromEntity($entity);
+  if (is_null($metatag_attachments)) {
+    // Load the meta tags from the route.
+    $metatag_attachments = metatag_get_tags_from_route();
 
     // If any Metatag items were found, append them.
     if (!empty($metatag_attachments)) {
@@ -88,4 +81,61 @@ function metatag_is_supported_route($route_name) {
   }
 
   return $supported;
+}
+
+/**
+ * Implements template_preprocess_html().
+ */
+function metatag_preprocess_html(&$variables) {
+  $attachments = drupal_static('metatag_attachments');
+
+  if (is_null($attachments)) {
+    $attachments = metatag_get_tags_from_route();
+  }
+
+  // Load the page title.
+  if (!empty($attachments['#attached']['html_head'])) {
+    foreach ($attachments['#attached']['html_head'] as $key => $attachment) {
+      if (!empty($attachment[1]) && $attachment[1] == 'title') {
+        // It's safe to access the value directly because it was already
+        // processed in MetatagManager::generateElements().
+        $variables['head_title_array'] = array();
+        $variables['head_title'] = $attachment[0]['#attributes']['content'];
+        // Original:
+        // $variables['head_title_array']['title'] = $attachment[0]['#attributes']['content'];
+        // $variables['head_title'] = implode(' | ', $variables['head_title_array']);
+        break;
+      }
+    }
+  }
+}
+
+/**
+ * Load the meta tags by processing the route parameters.
+ *
+ * @return array()
+ *   All of the meta tags identified for the header.
+ */
+function metatag_get_tags_from_route() {
+  $metatags = array();
+
+  // Load the current route.
+  $route_match = \Drupal::routeMatch();
+
+  // Look for a canonical entity view page, e.g. node/{nid}, user/{uid}, etc.
+  $entity_type = metatag_is_supported_route($route_match->getRouteName());
+
+  // Only proceed if an entity was identified.
+  if (!empty($entity_type)) {
+    // Load the entity from the route's parameters.
+    $entity = $route_match->getParameter($entity_type);
+
+    // Get the manager service to do all the work.
+    $manager = \Drupal::service('metatag.manager');
+
+    // Assemble the attachments array from all the metatag plugins.
+    $metatags = $manager->attachmentsFromEntity($entity);
+  }
+
+  return $metatags;
 }

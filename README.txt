@@ -106,7 +106,6 @@ Todo
 --------------------------------------------------------------------------------
 Urgent:
 * Insert some (token-based) default values as temporary solution.
-* Proper output for the page title tag.
 * Annotation placeholders.
 
 Soon:
