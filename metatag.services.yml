@@ -14,3 +14,7 @@ services:
     class: Drupal\metatag\MetatagManager
     arguments: ['@plugin.manager.metatag.group', '@plugin.manager.metatag.tag', '@metatag.token']
 
+  metatag.route_subscriber:
+    class: Drupal\metatag\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

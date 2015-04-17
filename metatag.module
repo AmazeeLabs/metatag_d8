@@ -89,3 +89,14 @@ function metatag_is_supported_route($route_name) {
 
   return $supported;
 }
+
+/**
+ * Router callback for _title_callback().
+ *
+ * @see \Drupal\metatag\Routing\RouteSubscriber.php
+ */
+function metatag_title_callback() {
+  // hello.
+  $args = func_get_args();
+  die('hello?');
+}
