@@ -1,11 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\metatag\Tag\OpenGraphBase.
+ * Contains \Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase.
  */
 
 /**
- * This base plugin allows OG meta tags to be further customized.
+ * This base plugin allows "property"-style meta tags, e.g. Open Graph tags, to
+ * be further customized.
  */
 
 namespace Drupal\metatag\Plugin\metatag\Tag;
@@ -13,13 +14,13 @@ namespace Drupal\metatag\Plugin\metatag\Tag;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
 
-abstract class OpenGraphBase extends TagBase {
+abstract class MetaPropertyBase extends MetaNameBase {
   /**
    * Display the meta tag.
    */
   public function output() {
     if (empty($this->value)) {
-      // If there is no value, we don't want a metatag output.
+      // If there is no value, we don't want a tag output.
       $element = '';
     }
     else {

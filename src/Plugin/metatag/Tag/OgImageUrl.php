@@ -7,7 +7,7 @@
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\metatag\Tag\OpenGraphBase;
+use Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
@@ -19,9 +19,9 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   description = @Translation("A alternative version of og:image and has exactly the same requirements; only one needs to be used."),
  *   name = "og:image:url",
  *   group = "open_graph",
- *   weight = 3
+ *   weight = 10
  * )
  */
-class OgImageUrl extends OpenGraphBase {
+class OgImageUrl extends MetaPropertyBase {
   // Nothing here yet. Just a placeholder class for a plugin.
 }

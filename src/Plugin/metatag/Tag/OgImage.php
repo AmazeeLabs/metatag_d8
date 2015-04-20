@@ -7,7 +7,7 @@
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\metatag\Tag\OpenGraphBase;
+use Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
@@ -19,9 +19,9 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   description = @Translation("The URL of an image which should represent the content. For best results use an image that is at least 1200 x 630 pixels in size, but at least 600 x 316 pixels is a recommended minimum. Supports PNG, JPEG and GIF formats. Should not be used if og:image:url is used."),
  *   name = "og:image",
  *   group = "open_graph",
- *   weight = 2
+ *   weight = 9
  * )
  */
-class OgImage extends OpenGraphBase {
+class OgImage extends MetaPropertyBase {
   // Nothing here yet. Just a placeholder class for a plugin.
 }

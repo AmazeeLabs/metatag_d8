@@ -7,7 +7,7 @@
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\metatag\Tag\TagBase;
+use Drupal\metatag\Plugin\metatag\Tag\MetaNameBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
@@ -22,7 +22,7 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   weight = -1
  * )
  */
-class Title extends TagBase {
+class Title extends MetaNameBase {
 
   /**
    * Override the output of this tag so it's an actual TITLE tag.
@@ -31,7 +31,7 @@ class Title extends TagBase {
    */
   // public function output() {
   //   if (empty($this->value)) {
-  //     // If there is no value, we don't want a metatag output.
+  //     // If there is no value, we don't want a tag output.
   //     $element = '';
   //   }
   //   else {

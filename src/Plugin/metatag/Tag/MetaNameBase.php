@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\metatag\Tag\TagBase.
+ * Contains \Drupal\metatag\Plugin\metatag\Tag\MetaTagBase.
  */
 
 /**
@@ -13,7 +13,7 @@ namespace Drupal\metatag\Plugin\metatag\Tag;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
 
-abstract class TagBase extends PluginBase {
+abstract class MetaTagBase extends PluginBase {
   /**
    * Machine name of the meta tag plugin.
    *
@@ -130,7 +130,7 @@ abstract class TagBase extends PluginBase {
 
   public function output() {
     if (empty($this->value)) {
-      // If there is no value, we don't want a metatag output.
+      // If there is no value, we don't want a tag output.
       $element = '';
     }
     else {

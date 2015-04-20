@@ -7,7 +7,7 @@
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
 use Drupal\Core\Annotation\Translation;
-use Drupal\metatag\Plugin\metatag\Tag\OpenGraphBase;
+use Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
 use Drupal\metatag\Annotation\MetatagTag;
 
 /**
@@ -19,9 +19,9 @@ use Drupal\metatag\Annotation\MetatagTag;
  *   description = @Translation("The title of the content, e.g., <em>The Rock</em>."),
  *   name = "og:title",
  *   group = "open_graph",
- *   weight = -1
+ *   weight = 4
  * )
  */
-class OgTitle extends OpenGraphBase {
+class OgTitle extends MetaPropertyBase {
   // Nothing here yet. Just a placeholder class for a plugin.
 }
