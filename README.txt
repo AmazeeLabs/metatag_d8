@@ -110,28 +110,25 @@ Urgent:
 
 Soon:
 * Generate all of the meta tags from D7.
-  * Basic
   * Advanced
   * Open Graph
   * Twitter Cards
-  * Facebook
   * Dublin Core Basic
   * Dublin Core Advanced
   * Site Validation
   * App Links
-* New meta tag types:
-  * Link.
+* New meta tag form field types:
   * Date interval.
-  * Checkboxes.
-  * Properties (Open Graph).
+  * Checkbox(es).
+  * Selector.
+  * URL.
 * Tidy output.
 * API expansion:
   * Multiple values.
   * Context.
   * Dependencies.
   * Validation.
-  * RDF namespaces
-* Update meta group descriptions from D7.
+  * Make 'name' optional, if empty() default to using 'id'.
 * Global configuration / defaults.
   * Global defaults
   * Entity defaults
