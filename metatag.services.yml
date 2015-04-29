@@ -14,3 +14,12 @@ services:
     class: Drupal\metatag\MetatagManager
     arguments: ['@plugin.manager.metatag.group', '@plugin.manager.metatag.tag', '@metatag.token']
 
+  metatag.normalizer.field.hal:
+    class: Drupal\metatag\Normalizer\FieldItemNormalizer
+    tags:
+      - { name: normalizer, priority: 99 }
+
+  metatag.normalizer.field.json:
+    class: Drupal\metatag\Normalizer\FieldItemNormalizer
+    tags:
+      - { name: normalizer, priority: 99 }
