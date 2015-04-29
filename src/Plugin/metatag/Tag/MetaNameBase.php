@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\metatag\Plugin\metatag\Tag\MetaTagBase.
+ * Contains \Drupal\metatag\Plugin\metatag\Tag\MetaNameBase.
  */
 
 /**
@@ -13,7 +13,7 @@ namespace Drupal\metatag\Plugin\metatag\Tag;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
 
-abstract class MetaTagBase extends PluginBase {
+abstract class MetaNameBase extends PluginBase {
   /**
    * Machine name of the meta tag plugin.
    *
