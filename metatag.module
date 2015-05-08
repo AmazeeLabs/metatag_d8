@@ -56,8 +56,16 @@ function metatag_page_attachments(array &$attachments) {
     $metatag_attachments = metatag_get_tags_from_route();
 
     // If any Metatag items were found, append them.
-    if (!empty($metatag_attachments)) {
-      $attachments = array_merge($attachments, $metatag_attachments);
+    if (!empty($metatag_attachments['#attached']['html_head'])) {
+      if (empty($attachments['#attached'])) {
+        $attachments['#attached'] = [];
+      }
+      if (empty($attachments['#attached']['html_head'])) {
+        $attachments['#attached']['html_head'] = [];
+      }
+      foreach ($metatag_attachments['#attached']['html_head'] as $item) {
+        $attachments['#attached']['html_head'][] = $item;
+      }
     }
   }
 }
