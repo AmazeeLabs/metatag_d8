@@ -233,7 +233,7 @@ class MetatagManager {
         // Check the field type against our list of fields.
         if (isset($field_type) && in_array($field_type, $field_types)) {
           // Get the machine name of the field.
-          $field_name = $field_info->field_name;
+          $field_name = $field->getName();
 
           $field_list[$field_name] = $field_info;
         }
